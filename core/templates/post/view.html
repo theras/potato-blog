@@ -1,0 +1,20 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+<article>
+<p class="posted_on">{{ post.date_published|date:"F jS Y" }}</p>
+<h1>{{ post.title }}</h1>
+<p class="brief">{{ post.brief }}</p>
+{% load markup %}
+<p>
+	{{ post.content|markdown:"safe" }}
+</p>
+<p><a href="{{ post.get_edit_url }}" class="edit-btn">Edit Post</a> <a href="{{ post.get_delete_url }}" class="delete-btn">Delete Post</a></p>
+</article>
+
+{% if post.comments_enabled %}
+	{% include "post/_disqus.html" %}
+{% else %}
+	<p class="brief">Comments are disabled for this post</p>
+{% endif %}
+{% endblock content %}

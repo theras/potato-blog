@@ -1,0 +1,21 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Blog</title>
+	<link href="/static/css/style.css" rel="stylesheet" type="text/css">
+	<script src="http://code.jquery.com/jquery.js"></script>
+</head>
+<body>
+<nav>
+	<section class="container">
+		<ul class="nav">
+		  <li><a class="{% ifequal request.path "/" %}active{% endifequal %}" href="/">Home</a></li>
+		  <li><a class="{% ifequal request.path "/admin/add/" %}active{% endifequal %}"href="/admin/add/">Add Post</a></li>
+		</ul>
+	</section>
+</nav>
+<section class="container">
+	{% block content %}{% endblock content %}
+</section>
+</body>
+</html>
