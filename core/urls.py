@@ -16,6 +16,13 @@ urlpatterns = patterns('core.views',
     ),
     
     url(
+        r'^archive/$',
+        'archive',
+        name = 'archive_index',
+        
+    ),
+    
+    url(
         r'^post/(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/(?P<slug>[-\w]+)/edit/$',
         'admin_post_edit',
         name = 'admin_post_edit',

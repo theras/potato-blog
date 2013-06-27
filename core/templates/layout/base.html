@@ -10,6 +10,7 @@
 	<section class="container">
 		<ul class="nav">
 		  <li><a class="{% ifequal request.path "/" %}active{% endifequal %}" href="/">Home</a></li>
+		  <li><a class="{% ifequal request.path "/archive/" %}active{% endifequal %}" href="/archive/">Archive</a></li>
 		  <li><a class="{% ifequal request.path "/admin/add/" %}active{% endifequal %}"href="/admin/add/">Add Post</a></li>
 		</ul>
 	</section>

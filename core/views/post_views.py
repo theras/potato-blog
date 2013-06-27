@@ -11,5 +11,15 @@ def post_index(request):
 	return render_to_response('post/index.html', RequestContext(request, locals()))
 
 def post_view(request, slug, year, month, day):
-	post = Post.query(ndb.AND(Post.slug == slug, Post.date_published == datetime.datetime(int(year), int(month), int(day)))).get()
+	post = Post.query(
+		ndb.AND(
+			Post.slug == slug,
+			Post.date_published == datetime.datetime(int(year), int(month), int(day))
+		)
+	).get()
 	return render_to_response('post/view.html', RequestContext(request, locals()))
+
+def archive(request):
+	posts = Post.query(Post.is_active == True).order(-Post.created_at)
+	latest_posts = posts.fetch(limit = 5)
+	return render_to_response('archive/index.html', RequestContext(request, locals()))
