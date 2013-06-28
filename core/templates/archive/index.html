@@ -1,22 +1,27 @@
 {% extends "layout/base.html" %}
 
 {% block content %}
+{% if posts %}
+	{% regroup posts by date_published|date:"Y" as archive_years %}
+	<h1>Archive</h1>
+	{% for year in archive_years %}
+	<ul>
+		<li>{{ year.grouper }}</li>
+		{% regroup year.list by date_published|date:"F" as archive_months %}
+		<ul>
+		{% for month in archive_months %}
+			<li><i>{{ month.grouper }}</i></li>
+			<ul>
+			{% for post in month.list %}
+				<li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+			{% endfor %}
+			</ul>
+		{% endfor %}
+		</ul>
+	</ul>
+	{% endfor %}
+{% else %}
+	<p>This blog has no posts. :(</p>
+{% endif %}
 
-<h1>Latest Posts</h1>
-{% for post in latest_posts %}
-	<p class="posted_on">{{ post.title }}</p>
-{% endfor %}
-
-{% regroup posts by date_published|date:"F Y" as posts_by_month %}
-<h1>Archives by month</h1>
-{% for months in posts_by_month %}
-	<p class="posted_on">{{ months.grouper }}</p>
-{% endfor %}
-
-
-{% regroup posts by date_published|date:"Y" as posts_by_year %}
-<h1>Archives by year</h1>
-{% for year in posts_by_year %}
-	<p class="posted_on">{{ year.grouper }}</p>
-{% endfor %}
 {% endblock content %}

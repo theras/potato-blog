@@ -17,7 +17,7 @@ urlpatterns = patterns('core.views',
     
     url(
         r'^archive/$',
-        'archive',
+        'archive_index',
         name = 'archive_index',
         
     ),

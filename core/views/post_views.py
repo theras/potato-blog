@@ -19,7 +19,6 @@ def post_view(request, slug, year, month, day):
 	).get()
 	return render_to_response('post/view.html', RequestContext(request, locals()))
 
-def archive(request):
+def archive_index(request):
 	posts = Post.query(Post.is_active == True).order(-Post.created_at)
-	latest_posts = posts.fetch(limit = 5)
 	return render_to_response('archive/index.html', RequestContext(request, locals()))
