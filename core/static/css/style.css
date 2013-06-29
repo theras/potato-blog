@@ -146,3 +146,19 @@ span.helptext {
 	display: inline-block;
 	color: #A6ABAB;
 }
+ul.grandparent li, ul.parent li, ul.child li {
+	list-style-type: none;
+	padding: 2px 0px;
+}
+ul.grandparent li {
+	color: #26AFAE;
+}
+ul.parent li {
+	color: #3A4E5A;
+	margin-left: 20px;
+}
+ul.child li a {
+	color: #A6ABAB;
+	margin-left: 20px;
+	text-decoration: none;
+}

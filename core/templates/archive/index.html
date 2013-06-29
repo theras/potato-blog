@@ -5,13 +5,13 @@
 	{% regroup posts by date_published|date:"Y" as archive_years %}
 	<h1>Archive</h1>
 	{% for year in archive_years %}
-	<ul>
+	<ul class="grandparent">
 		<li>{{ year.grouper }}</li>
 		{% regroup year.list by date_published|date:"F" as archive_months %}
-		<ul>
+		<ul class="parent">
 		{% for month in archive_months %}
-			<li><i>{{ month.grouper }}</i></li>
-			<ul>
+			<li>{{ month.grouper }}</li>
+			<ul class="child">
 			{% for post in month.list %}
 				<li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
 			{% endfor %}
