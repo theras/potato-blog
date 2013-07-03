@@ -12,7 +12,7 @@ class NdbTestCase(unittest.TestCase):
         self.testbed.init_memcache_stub()
 
 
-    def tearDown(self):
+    def teatDown(self):
         self.testbed.deactivate()
 
 
