@@ -28,8 +28,13 @@ handlers:
   script: main.app
   login: admin
 
+- url: /admin/.*
+  script: main.app
+  login: admin
+
 - url: /.*
   script: main.app
+
 
 skip_files:
 - ^(.*/)?app.yaml

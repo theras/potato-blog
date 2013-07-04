@@ -1,7 +1,6 @@
 {% extends "layout/base.html" %}
 
 {% block content %}
-
 {% regroup posts by date_published|date:"F Y" as posts_by_month %}
 {% for months in posts_by_month %}
 	<section class="month">

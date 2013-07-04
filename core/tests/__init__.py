@@ -1,0 +1,2 @@
+from admin_tests import AdminTestCase
+from post_tests import PostTestCase

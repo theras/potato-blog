@@ -6,11 +6,7 @@ from google.appengine.ext import ndb
 
 import datetime
 
-def admin_post_list(request):
-	posts = Post.query().order(-Post.date_published)
-	return render_to_response('admin/list.html', RequestContext(request, locals()))
-
-def admin_post_add(request):
+def admin_add_post(request):
 	form = PostForm()
 	if request.method == "POST":
 		form = PostForm(request.POST)
@@ -28,7 +24,7 @@ def admin_post_add(request):
 		form = PostForm()
 	return render_to_response('admin/add.html', RequestContext(request, locals()))
 
-def admin_post_edit(request, slug, year, month, day):
+def admin_edit_post(request, slug, year, month, day):
 	post = Post.query(ndb.AND(Post.slug == slug, Post.date_published == datetime.datetime(int(year), int(month), int(day)))).get()
 	form = PostForm(initial = post.to_dict())
 	if request.method == "POST":
@@ -45,7 +41,7 @@ def admin_post_edit(request, slug, year, month, day):
 		form
 	return render_to_response('admin/edit.html', RequestContext(request, locals()))
 
-def admin_post_delete(request, slug, year, month, day):
+def admin_delete_post(request, slug, year, month, day):
 	post = Post.query(ndb.AND(Post.slug == slug, Post.date_published == datetime.datetime(int(year), int(month), int(day)))).get()
 	post.key.delete()
 	return HttpResponseRedirect('/')

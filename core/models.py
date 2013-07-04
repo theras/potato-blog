@@ -25,7 +25,7 @@ class Post(ndb.Model):
 		)
 
 	def get_edit_url(self):
-		return '/post/%i/%s/%s/%s/edit/' % (
+		return '/admin/%i/%s/%s/%s/edit/' % (
 			self.date_published.year,
 			self.date_published.strftime("%m"),
 			self.date_published.strftime("%d"),
@@ -33,7 +33,7 @@ class Post(ndb.Model):
 		)
 
 	def get_delete_url(self):
-		return '/post/%i/%s/%s/%s/delete/' % (
+		return '/admin/%i/%s/%s/%s/delete/' % (
 			self.date_published.year,
 			self.date_published.strftime("%m"),
 			self.date_published.strftime("%d"),

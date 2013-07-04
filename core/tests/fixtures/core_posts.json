@@ -1,0 +1,28 @@
+[
+{
+	"model": "core.post", 
+	"fields": {
+		"title": "Test Post 1"
+		"date_published": "2013-07-04",
+		"created_at": "2013-07-04 00:00:00" 
+		"content": "Vestibulum id ligula porta felis euismod semper.",
+		"brief": "To infinity ... and beyond."
+		"is_active": true,
+		"slug": "test-post-1",
+		"comments_enabled": true,
+	}
+}
+{
+	"model": "core.post", 
+	"fields": {
+		"title": "Test Post 2"
+		"date_published": "2013-07-05",
+		"created_at": "2013-07-05 00:00:00" 
+		"content": "Vestibulum id ligula porta felis euismod semper.",
+		"brief": "I love the smell of napalm in the morning."
+		"is_active": false,
+		"slug": "test-post-2",
+		"comments_enabled": true,
+	}
+}
+]
