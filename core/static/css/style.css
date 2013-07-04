@@ -4,7 +4,7 @@ html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address
 body {
 	color: #3A4E5A;
 	font-size: 13px;
-	font-family: Avenir;
+	font-family: Avenir, "Helvetica Neue", Arial, Helvetica, sans-serif;
 	line-height: 19px;
 }
 
