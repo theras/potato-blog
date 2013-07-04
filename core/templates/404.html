@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-gb" lang="en-gb">
-  <head>
-    <title>404 Error</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  </head>
-  <body>
-    <h1>Page not found</h1>
-  </body>
-</html>
+{% extends "layout/base.html" %}
 
+{% block title %}404 Error{% endblock title %}
+
+{% block content %}
+<h1>Page not found</h1>
+<p>The page you were looking for doesn't exist, perhaps the <a href="{% url archive_index %}">archive</a> could help.</p>
+{% endblock content %}

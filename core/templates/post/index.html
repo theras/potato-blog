@@ -1,5 +1,7 @@
 {% extends "layout/base.html" %}
 
+{% block title %}Homepage{% endblock title %}
+
 {% block content %}
 {% regroup posts by date_published|date:"F Y" as posts_by_month %}
 {% for months in posts_by_month %}

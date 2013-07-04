@@ -1,5 +1,7 @@
 {% extends "layout/base.html" %}
 
+{% block title %}Archive{% endblock title %}
+
 {% block content %}
 {% if posts %}
 	{% regroup posts by date_published|date:"Y" as archive_years %}

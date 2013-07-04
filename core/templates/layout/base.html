@@ -1,7 +1,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Blog</title>
+	<title>Scott's Blog - {% block title %}{% endblock title %}</title>
 	<link href="/static/css/style.css" rel="stylesheet" type="text/css">
 	<script src="http://code.jquery.com/jquery.js"></script>
 	<script src="/static/js/application.js"></script>
@@ -11,9 +11,15 @@
 <nav>
 	<section class="container">
 		<ul class="nav">
-		  <li><a class="{% ifequal request.path "/" %}active{% endifequal %}" href="/">Home</a></li>
-		  <li><a class="{% ifequal request.path "/archive/" %}active{% endifequal %}" href="/archive/">Archive</a></li>
-		  <li><a class="{% ifequal request.path "/admin/add/" %}active{% endifequal %}"href="/admin/add/">Add Post</a></li>
+		  <li>
+		  	<a class="{% ifequal request.path "/" %}active{% endifequal %}" href="{% url post_index %}">Home</a>
+		  </li>
+		  <li>
+		  	<a class="{% ifequal request.path "/archive/" %}active{% endifequal %}" href="{% url archive_index %}">Archive</a>
+		  </li>
+		  <li>
+		  	<a class="{% ifequal request.path "/admin/add/" %}active{% endifequal %}"href="{% url admin_add_post %}">Add Post</a>
+		  </li>
 		</ul>
 	</section>
 </nav>

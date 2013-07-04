@@ -1,10 +1,12 @@
 {% extends "layout/base.html" %}
 
+{% block title %}Editing "{{ post.title }}"{% endblock title %}
+
 {% block content %}
 <h1>Edit Post</h1>
 <form method="post">
 	{% csrf_token %}
 	{{ form.as_p }}
-	<input name="submit" type="submit" value="Edit Post" class="btn btn-large btn-primary">
+	<input name="submit" type="submit" value="Edit Post" class="btn">
 </form>
 {% endblock content %}

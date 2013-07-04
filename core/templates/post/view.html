@@ -1,5 +1,7 @@
 {% extends "layout/base.html" %}
 
+{% block title %}{{ post.title }}{% endblock title %}
+
 {% block content %}
 <article>
 <p class="posted_on">{{ post.date_published|date:"F jS Y" }}</p>
