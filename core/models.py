@@ -43,6 +43,6 @@ class Post(ndb.Model):
 class PostForm(forms.Form):
 	title = forms.CharField()
 	brief = forms.CharField()
-	content = forms.CharField(widget = forms.Textarea, help_text='This field supports markdown')
+	content = forms.CharField(widget = forms.Textarea)
 	is_active = forms.BooleanField(required = False, label = 'Visible to public?')
 	comments_enabled = forms.BooleanField(required = False, label = 'Enable comments?')

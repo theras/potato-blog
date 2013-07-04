@@ -1,0 +1,24 @@
+<div class="field">
+	<label for="id_title">Title:</label>
+	<input type="text" name="title" id="id_title" value="{{ post.title|default_if_none:'' }}"/>
+</div>
+<div class="field">
+	<label for="id_brief">Brief:</label>
+	<input type="text" name="brief" id="id_brief" value="{{ post.brief|default_if_none:'' }}"/>
+</div>
+<div class="field">
+	<label for="id_content">Content:</label>
+	<div class="wmd-panel">
+		<div id="wmd-button-bar"></div>
+		<textarea id="wmd-input" rows="10" class="wmd-input" name="content">{{ post.content|default_if_none:'' }}</textarea>
+		<div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+	</div>
+</div>
+<div class="field">
+	<label for="id_is_active">Visible to public?</label>
+	<input type="checkbox" name="is_active" id="id_is_active" {% if post.is_active %}checked="checked"{% else %} {% endif %}/>
+</div>
+<div class="field">
+	<label for="id_comments_enabled">Enable comments?</label>
+	<input type="checkbox" name="comments_enabled" id="id_comments_enabled" {% if post.comments_enabled %}checked="checked"{% else %} {% endif %}/>
+</div>

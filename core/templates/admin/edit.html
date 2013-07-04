@@ -2,11 +2,33 @@
 
 {% block title %}Editing "{{ post.title }}"{% endblock title %}
 
+{% block extra_assets %}
+<link href="/static/css/pagedown/pagedown.css" rel="stylesheet" type="text/css">
+<script src="/static/js/pagedown/Markdown.Converter.js"></script>
+<script src="/static/js/pagedown/Markdown.Sanitizer.js"></script>
+<script src="/static/js/pagedown/Markdown.Editor.js"></script>
+{% endblock extra_assets %}
+
 {% block content %}
-<h1>Edit Post</h1>
+<h1>Editing "{{ post.title }}"</h1>
 <form method="post">
 	{% csrf_token %}
-	{{ form.as_p }}
+	{% include "admin/_form.html" %}
 	<input name="submit" type="submit" value="Edit Post" class="btn">
 </form>
+<script type="text/javascript">
+(function () {
+	var converter1 = Markdown.getSanitizingConverter();
+
+	converter1.hooks.chain("preBlockGamut", function (text, rbg) {
+	  	return text.replace(/^ {0,3}""" *\n((?:.*?\n)+?) {0,3}""" *$/gm, function (whole, inner) {
+	  		return "<blockquote>" + rbg(inner) + "</blockquote>\n";
+	  	});
+	});
+
+	var editor1 = new Markdown.Editor(converter1);
+
+	editor1.run();
+})();
+</script>
 {% endblock content %}
