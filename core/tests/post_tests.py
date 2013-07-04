@@ -33,14 +33,14 @@ class PostTestCase(NdbTestCase):
 		self.assertEqual(response.status_code, 200)
 	
 	def test_view_post_page(self):
-		
+		# Insert initial post
 		self.post.put()
 		
 		# Post doesn't exist, return 404
 		response = self.client.get(reverse('post_view', args=[2013,07,04,'i-dont-exist']))
 		self.assertEqual(response.status_code, 404)
 		
-		# Post is active and exists, return 
+		# Post is active and exists, return 200
 		response = self.client.get(reverse('post_view', args=[2013,07,04,'test-post']))
 		self.assertEqual(response.status_code, 200)
 		
