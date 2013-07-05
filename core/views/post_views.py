@@ -9,8 +9,7 @@ import lib.markdown
 import datetime
 
 def post_index(request):
-	user = users.get_current_user()
-	posts = Post.query(Post.is_active == True).order(-Post.created_at)
+	posts = Post.query(Post.is_active == True).order(-Post.created_at).fetch()
 	return render_to_response('post/index.html', RequestContext(request, locals()))
 
 def post_view(request, slug, year, month, day):
@@ -26,5 +25,5 @@ def post_view(request, slug, year, month, day):
 	return render_to_response('post/view.html', RequestContext(request, locals()))
 
 def archive_index(request):
-	posts = Post.query(Post.is_active == True).order(-Post.created_at)
+	posts = Post.query(Post.is_active == True).order(-Post.created_at).fetch()
 	return render_to_response('archive/index.html', RequestContext(request, locals()))

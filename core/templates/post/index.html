@@ -3,14 +3,18 @@
 {% block title %}Homepage{% endblock title %}
 
 {% block content %}
-{% regroup posts by date_published|date:"F Y" as posts_by_month %}
-{% for months in posts_by_month %}
-	<section class="month">
-	<p class="posted_on">{{ months.grouper }}</p>
-	{% for post in months.list %}
-		<h1><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h1>
-		<p class="brief">{{ post.brief }}
+{% if posts %}
+	{% regroup posts by date_published|date:"F Y" as posts_by_month %}
+	{% for months in posts_by_month %}
+		<section class="month">
+		<p class="posted_on">{{ months.grouper }}</p>
+		{% for post in months.list %}
+			<h1><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h1>
+			<p class="brief">{{ post.brief }}
+		{% endfor %}
+		</section>
 	{% endfor %}
-	</section>
-{% endfor %}
+{% else %}
+	<p>This blog has no posts. :(</p>
+{% endif %}
 {% endblock content %}
