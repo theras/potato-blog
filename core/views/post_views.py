@@ -1,5 +1,4 @@
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from core.models import Post, PostForm
 from google.appengine.ext import ndb
 from google.appengine.api import users
@@ -10,7 +9,12 @@ import datetime
 
 def post_index(request):
 	posts = Post.query(Post.is_active == True).order(-Post.created_at).fetch()
-	return render_to_response('post/index.html', RequestContext(request, locals()))
+	
+	r = render(
+		request, 'post/index.html',
+		{ 'posts': posts }
+	)
+	return r
 
 def post_view(request, slug, year, month, day):
 	post = Post.query(
@@ -20,10 +24,21 @@ def post_view(request, slug, year, month, day):
 			Post.is_active == True,
 		)
 	).get()
+	
 	if post is None:
 		raise Http404
-	return render_to_response('post/view.html', RequestContext(request, locals()))
+		
+	r = render(
+		request, 'post/view.html',
+		{ 'post': post }
+	)
+	return r
 
 def archive_index(request):
 	posts = Post.query(Post.is_active == True).order(-Post.created_at).fetch()
-	return render_to_response('archive/index.html', RequestContext(request, locals()))
+	
+	r = render(
+		request, 'archive/index.html',
+		{ 'posts': posts }
+	)
+	return r

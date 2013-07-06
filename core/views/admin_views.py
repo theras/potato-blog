@@ -1,6 +1,4 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render, redirect
 from core.models import Post, PostForm
 from google.appengine.ext import ndb
 
@@ -19,10 +17,15 @@ def admin_add_post(request):
 				comments_enabled = form.cleaned_data['comments_enabled'],
 			)
 			post.put()
-			return HttpResponseRedirect(post.get_absolute_url())
+			return redirect(post.get_absolute_url())
 	else:
 		form = PostForm()
-	return render_to_response('admin/add.html', RequestContext(request, locals()))
+		
+	r = render(
+		request, 'admin/add.html',
+		{ 'form': form }
+	)
+	return r
 
 def admin_edit_post(request, slug, year, month, day):
 	post = Post.query(ndb.AND(Post.slug == slug, Post.date_published == datetime.datetime(int(year), int(month), int(day)))).get()
@@ -36,12 +39,19 @@ def admin_edit_post(request, slug, year, month, day):
 			post.is_active = form.cleaned_data['is_active']
 			post.comments_enabled = form.cleaned_data['comments_enabled']
 			post.put()
-			return HttpResponseRedirect(post.get_absolute_url())
+			return redirect(post.get_absolute_url())
 	else:
 		form
-	return render_to_response('admin/edit.html', RequestContext(request, locals()))
+	
+	r = render(
+		request, 'admin/edit.html',
+		{ 'post': post, 
+		  'form': form }
+	)
+	return r
 
 def admin_delete_post(request, slug, year, month, day):
 	post = Post.query(ndb.AND(Post.slug == slug, Post.date_published == datetime.datetime(int(year), int(month), int(day)))).get()
 	post.key.delete()
-	return HttpResponseRedirect('/')
+	
+	return redirect('/')
