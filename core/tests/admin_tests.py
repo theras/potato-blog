@@ -73,8 +73,8 @@ class AdminTestCase(NdbTestCase):
 		self.assertEqual(response.status_code, 200)
 	
 	def test_delete_method(self):
-		# Test method not correct, too fix.
-		pass
+		post = self.post.put().delete()
+		self.assertEqual(post, None)
 		
 
 if __name__ == '__main__':
