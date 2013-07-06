@@ -10,6 +10,7 @@ from core.models import Post
 
 from django.test.client import Client
 from django.core.urlresolvers import reverse
+from django.template.defaultfilters import slugify
 
 class PostTestCase(NdbTestCase):
 	def setUp(self):
@@ -34,19 +35,34 @@ class PostTestCase(NdbTestCase):
 	
 	def test_post_that_does_exist(self):
 		self.post.put()
-		response = self.client.get(reverse('post_view', args=[2013,07,04,'test-post']))
+		response = self.client.get(reverse('post_view', args=[
+			self.post.date_published.strftime("%Y"),
+			self.post.date_published.strftime("%m"),
+			self.post.date_published.strftime("%d"),
+			slugify(self.post.title)])
+		)
 		self.assertEqual(response.status_code, 200)
 	
 	def test_post_that_does_not_exist(self):
 		self.post.put()
-		response = self.client.get(reverse('post_view', args=[2013,07,04,'i-dont-exist']))
+		response = self.client.get(reverse('post_view', args=[
+			self.post.date_published.strftime("%Y"),
+			self.post.date_published.strftime("%m"),
+			self.post.date_published.strftime("%d"),
+			'i-dont-exist'])
+		)
 		self.assertEqual(response.status_code, 404)
 		
 	def test_post_is_not_active(self):
 		self.post.put()
 		self.post.is_active = False
 		self.post.put()
-		response = self.client.get(reverse('post_view', args=[2013,07,04,'test-post']))
+		response = self.client.get(reverse('post_view', args=[
+			self.post.date_published.strftime("%Y"),
+			self.post.date_published.strftime("%m"),
+			self.post.date_published.strftime("%d"),
+			slugify(self.post.title)])
+		)
 		self.assertEqual(response.status_code, 404)
 
 if __name__ == '__main__':

@@ -10,6 +10,7 @@ from core.models import Post
 
 from django.test.client import Client
 from django.core.urlresolvers import reverse
+from django.template.defaultfilters import slugify
 
 
 class AdminTestCase(NdbTestCase):	
@@ -39,14 +40,22 @@ class AdminTestCase(NdbTestCase):
 			date_published = datetime.date(2012,11,22),
 		)
 		new_post.put()
-		response = self.client.get(reverse('post_view', args=[2012,11,22,'i-am-new']))
+		response = self.client.get(reverse('post_view', args=[
+			new_post.date_published.strftime("%Y"),
+			new_post.date_published.strftime("%m"),
+			new_post.date_published.strftime("%d"),
+			slugify(new_post.title)])
+		)
 		self.assertEqual(response.status_code, 200)
 	
 	def test_if_edit_page_is_reachable(self):
 		self.post.put()
 		response = self.client.get(
-			reverse('admin_edit_post', 
-			args=[2013,07,04,'test-post'])
+			reverse('admin_edit_post', args=[
+				self.post.date_published.strftime("%Y"),
+				self.post.date_published.strftime("%m"),
+				self.post.date_published.strftime("%d"),
+				slugify(self.post.title)])
 		)
 		self.assertEqual(response.status_code, 200)
 		
@@ -55,8 +64,11 @@ class AdminTestCase(NdbTestCase):
 		self.post.title = 'Cool New Title'
 		self.post.put()
 		response = self.client.get(
-			reverse('admin_edit_post', 
-			args=[2013,07,04,'cool-new-title'])
+			reverse('admin_edit_post', args=[
+			self.post.date_published.strftime("%Y"),
+			self.post.date_published.strftime("%m"),
+			self.post.date_published.strftime("%d"),
+			slugify(self.post.title)])
 		)
 		self.assertEqual(response.status_code, 200)
 	
