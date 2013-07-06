@@ -32,19 +32,18 @@ class PostTestCase(NdbTestCase):
 		response = self.client.get(reverse('archive_index'))
 		self.assertEqual(response.status_code, 200)
 	
-	def test_view_post_page(self):
-		# Insert initial post
+	def test_post_that_does_exist(self):
 		self.post.put()
-		
-		# Post doesn't exist, return 404
+		response = self.client.get(reverse('post_view', args=[2013,07,04,'test-post']))
+		self.assertEqual(response.status_code, 200)
+	
+	def test_post_that_does_not_exist(self):
+		self.post.put()
 		response = self.client.get(reverse('post_view', args=[2013,07,04,'i-dont-exist']))
 		self.assertEqual(response.status_code, 404)
 		
-		# Post is active and exists, return 200
-		response = self.client.get(reverse('post_view', args=[2013,07,04,'test-post']))
-		self.assertEqual(response.status_code, 200)
-		
-		# Post is not active but does exist, return 404
+	def test_post_is_not_active(self):
+		self.post.put()
 		self.post.is_active = False
 		self.post.put()
 		response = self.client.get(reverse('post_view', args=[2013,07,04,'test-post']))

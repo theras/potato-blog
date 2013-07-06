@@ -25,12 +25,11 @@ class AdminTestCase(NdbTestCase):
 		)
 		self.client = Client()
 
-	def test_add_page(self):
-		# Is the add page reachable
+	def test_if_add_page_is_reachable(self):
 		response = self.client.get(reverse('admin_add_post'))
 		self.assertEqual(response.status_code, 200)
 		
-		# Add a new post and check it is reachable
+	def test_add_new_post(self):
 		new_post = Post(
 			title = 'I Am New',
 			brief = 'The Good, The Bad, and The Ugly.',
@@ -43,18 +42,16 @@ class AdminTestCase(NdbTestCase):
 		response = self.client.get(reverse('post_view', args=[2012,11,22,'i-am-new']))
 		self.assertEqual(response.status_code, 200)
 	
-	def test_edit_page(self):
-		# Insert initial post
+	def test_if_edit_page_is_reachable(self):
 		self.post.put()
-		
-		# Is the edit page for a post reachable
 		response = self.client.get(
 			reverse('admin_edit_post', 
 			args=[2013,07,04,'test-post'])
 		)
 		self.assertEqual(response.status_code, 200)
 		
-		# Edit exisitng post and check it updates
+	def test_edit_exisiting_post(self):
+		self.post.put()
 		self.post.title = 'Cool New Title'
 		self.post.put()
 		response = self.client.get(
@@ -64,10 +61,7 @@ class AdminTestCase(NdbTestCase):
 		self.assertEqual(response.status_code, 200)
 	
 	def test_delete_method(self):
-		# Insert initial post
 		self.post.put()
-		
-		# Delete post and make sure it returns 404
 		self.post.key.delete()
 		response = self.client.get(
 			reverse('post_view', 
