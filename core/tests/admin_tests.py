@@ -39,42 +39,42 @@ class AdminTestCase(NdbTestCase):
 			comments_enabled = False,
 			date_published = datetime.date(2012,11,22),
 		)
-		new_post.put()
+		post = new_post.put().get()
 		response = self.client.get(reverse('post_view', args=[
-			new_post.date_published.strftime("%Y"),
-			new_post.date_published.strftime("%m"),
-			new_post.date_published.strftime("%d"),
-			slugify(new_post.title)])
+			post.date_published.strftime("%Y"),
+			post.date_published.strftime("%m"),
+			post.date_published.strftime("%d"),
+			slugify(post.title)])
 		)
 		self.assertEqual(response.status_code, 200)
 	
 	def test_if_edit_page_is_reachable(self):
-		self.post.put()
+		post = self.post.put().get()
 		response = self.client.get(
 			reverse('admin_edit_post', args=[
-				self.post.date_published.strftime("%Y"),
-				self.post.date_published.strftime("%m"),
-				self.post.date_published.strftime("%d"),
-				slugify(self.post.title)])
+				post.date_published.strftime("%Y"),
+				post.date_published.strftime("%m"),
+				post.date_published.strftime("%d"),
+				slugify(post.title)])
 		)
 		self.assertEqual(response.status_code, 200)
 		
 	def test_edit_exisiting_post(self):
-		self.post.put()
-		self.post.title = 'Cool New Title'
-		self.post.put()
+		post = self.post.put().get()
+		post.title = 'Cool New Title'
+		edited_post = post.put().get()
 		response = self.client.get(
 			reverse('admin_edit_post', args=[
-			self.post.date_published.strftime("%Y"),
-			self.post.date_published.strftime("%m"),
-			self.post.date_published.strftime("%d"),
-			slugify(self.post.title)])
+			edited_post.date_published.strftime("%Y"),
+			edited_post.date_published.strftime("%m"),
+			edited_post.date_published.strftime("%d"),
+			slugify(edited_post.title)])
 		)
 		self.assertEqual(response.status_code, 200)
 	
 	def test_delete_method(self):
-		post = self.post.put().delete()
-		self.assertEqual(post, None)
+		deleted_post = self.post.put().delete()
+		self.assertEqual(deleted_post, None)
 		
 
 if __name__ == '__main__':

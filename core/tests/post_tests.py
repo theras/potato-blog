@@ -34,34 +34,35 @@ class PostTestCase(NdbTestCase):
 		self.assertEqual(response.status_code, 200)
 	
 	def test_post_that_does_exist(self):
-		self.post.put()
+		post = self.post.put().get()
 		response = self.client.get(reverse('post_view', args=[
-			self.post.date_published.strftime("%Y"),
-			self.post.date_published.strftime("%m"),
-			self.post.date_published.strftime("%d"),
-			slugify(self.post.title)])
+			post.date_published.strftime("%Y"),
+			post.date_published.strftime("%m"),
+			post.date_published.strftime("%d"),
+			slugify(post.title)])
 		)
 		self.assertEqual(response.status_code, 200)
 	
 	def test_post_that_does_not_exist(self):
-		self.post.put()
+		new_title = 'I don\'t exist'
+		post = self.post.put().get()
 		response = self.client.get(reverse('post_view', args=[
-			self.post.date_published.strftime("%Y"),
-			self.post.date_published.strftime("%m"),
-			self.post.date_published.strftime("%d"),
-			'i-dont-exist'])
+			post.date_published.strftime("%Y"),
+			post.date_published.strftime("%m"),
+			post.date_published.strftime("%d"),
+			slugify(new_title)])
 		)
 		self.assertEqual(response.status_code, 404)
 		
 	def test_post_is_not_active(self):
-		self.post.put()
-		self.post.is_active = False
-		self.post.put()
+		post = self.post.put().get()
+		post.is_active = False
+		edited_post = post.put().get()
 		response = self.client.get(reverse('post_view', args=[
-			self.post.date_published.strftime("%Y"),
-			self.post.date_published.strftime("%m"),
-			self.post.date_published.strftime("%d"),
-			slugify(self.post.title)])
+			edited_post.date_published.strftime("%Y"),
+			edited_post.date_published.strftime("%m"),
+			edited_post.date_published.strftime("%d"),
+			slugify(edited_post.title)])
 		)
 		self.assertEqual(response.status_code, 404)
 
