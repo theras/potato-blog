@@ -34,9 +34,9 @@ app.yaml
 
 `application: your-app-name-here`
 
-core/templates/posts/_disqus.html
+settings.py
 
-`var disqus_shortname = 'your-disqus-shortname';`
+`DISQUS_SHORTNAME = 'your-disqus-shortname'`
 
 core/templates/layout/base.html
 

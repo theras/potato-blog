@@ -3,6 +3,7 @@ from core.models import Post, PostForm
 from google.appengine.ext import ndb
 from google.appengine.api import users
 from django.http import Http404
+from django.conf import settings
 
 import lib.markdown
 import datetime
@@ -30,7 +31,8 @@ def post_view(request, slug, year, month, day):
 		
 	r = render(
 		request, 'post/view.html',
-		{ 'post': post }
+		{ 'post': post,
+		  'disqus_shortname': settings.DISQUS_SHORTNAME }
 	)
 	return r
 

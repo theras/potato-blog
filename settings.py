@@ -1,5 +1,4 @@
 import os
-import sys
 
 APPENGINE_PRODUCTION = os.getenv('APPENGINE_PRODUCTION')
 
@@ -15,6 +14,10 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
+
+# Accepts a string: e.g. 'my-shortname'
+# Set to False if you do not wish to use Disqus
+DISQUS_SHORTNAME = 'scottappengineblog'
 
 # A custom cache backend using AppEngine's memcached
 CACHES = {
