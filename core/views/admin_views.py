@@ -22,13 +22,24 @@ def admin_add_post(request):
 		form = PostForm()
 		
 	r = render(
-		request, 'admin/add.html',
-		{ 'form': form }
+		request, 'admin/add.html', {
+			'form': form 
+		}
 	)
 	return r
 
 def admin_edit_post(request, slug, year, month, day):
-	post = Post.query(ndb.AND(Post.slug == slug, Post.date_published == datetime.datetime(int(year), int(month), int(day)))).get()
+	post = Post.query(
+		ndb.AND(
+			Post.slug == slug,
+			Post.date_published == datetime.datetime(
+				int(year),
+				int(month),
+				int(day)
+			)
+		)
+	).get()
+	
 	form = PostForm(initial = post.to_dict())
 	if request.method == "POST":
 		form = PostForm(request.POST)
@@ -44,14 +55,25 @@ def admin_edit_post(request, slug, year, month, day):
 		form
 	
 	r = render(
-		request, 'admin/edit.html',
-		{ 'post': post, 
-		  'form': form }
+		request, 'admin/edit.html', {
+			'post': post, 
+			'form': form
+		}
 	)
 	return r
 
 def admin_delete_post(request, slug, year, month, day):
-	post = Post.query(ndb.AND(Post.slug == slug, Post.date_published == datetime.datetime(int(year), int(month), int(day)))).get()
+	post = Post.query(
+		ndb.AND(
+			Post.slug == slug, 
+			Post.date_published == datetime.datetime(
+				int(year),
+				int(month),
+				int(day)
+			)
+		)
+	).get()
+	
 	post.key.delete()
 	
 	return redirect('/')
